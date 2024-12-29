@@ -23,8 +23,8 @@
 #define RX 14  // arduino serial RX pin to the DRA818 TX pin
 #define TX 15  // arduino serial TX pin to the DRA818 RX pin
 
-// old 300
-#define timeout 150
+// old 150
+#define timeout 600
 
 #define freq_rx 144.978
 #define freq_main 144.390  //145.390
