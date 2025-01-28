@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "pcb/README.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
@@ -175,11 +175,12 @@
   },
   "active": "e947f234654c2b50",
   "lastOpenFiles": [
+    "pcb/README.md",
+    "README.md",
+    "pcb/res/Pasted image 20250128110349.png",
     "pcb/res/Pasted image 20241229175545.png",
     "pcb/res",
     "pcb/Pasted image 20241229175454.png",
-    "pcb/README.md",
-    "Pasted image 20241229175226.png",
-    "README.md"
+    "Pasted image 20241229175226.png"
   ]
 }
