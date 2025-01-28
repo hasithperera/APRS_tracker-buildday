@@ -8192,6 +8192,32 @@
 		(layer "Edge.Cuts")
 		(uuid "cc239a4d-ea04-4220-8936-85bdfa5372c1")
 	)
+	(gr_text "KE8TJE"
+		(at 21.7 85.5 90)
+		(layer "F.SilkS")
+		(uuid "6518ed98-7275-4343-b7ee-b8822e83612a")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "APRS Tracker v1.1"
+		(at 18.8 85.4 90)
+		(layer "F.SilkS")
+		(uuid "f3e59fb4-9d77-4076-9468-aff7e4308cf0")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
 	(segment
 		(start 71.24 62.74)
 		(end 71.5 63)
