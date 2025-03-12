@@ -2,34 +2,25 @@
 
 #include <stdio.h>
 #include <SoftwareSerial.h>
-//#include <HardwareSerial.h>
-//#include "DRA818.h"  // uncomment the following line in DRA818.h (#define DRA818_DEBUG)
+
 #include <LibAPRS_Tracker.h>
 
 #define ADC_REFERENCE REF_5V
 #define OPEN_SQUELCH false
 
 /* Used Pins */
-#define radio_wake 16
-#define radio_ppt 13  //not needed
 
-#define radio_pwr 17
-#define alternate_freq 12
-#define radio_sql 2
+#define radio_ppt 2  //not needed
+
+
 
 #define sim_packet 11
-#define radio_freq_sw 12
 
-#define RX 14  // arduino serial RX pin to the DRA818 TX pin
-#define TX 15  // arduino serial TX pin to the DRA818 RX pin
 
 // old 150
 #define timeout 600
 
-#define freq_rx 144.978
-#define freq_main 144.390  //145.390
 
-#define ctcss 146.2
 
 //APRS specification
 #define symbol '>'
@@ -46,10 +37,6 @@
   // 11 - Spacecraft
 
 //#define simulate 1
-
-
-//SoftwareSerial *dra_serial;  // Serial connection to DRA818
-//DRA818 *dra;                 // the DRA object once instanciated
 
 String packetBuffer;
 SoftwareSerial gps(10, 11);  // RX, TX
@@ -74,34 +61,12 @@ void setup() {
 
   Serial.begin(9600);  // for logging
 
-  Serial.println("[info] KE8TJE - APRS tracker v3 - Beta");
+  Serial.println("[info] KE8TJE - APRS Buildday tracker v1.4");
   Serial.println("[info] IO init");
-  //dra_serial = new SoftwareSerial(RX, TX);  // Instantiate the Software Serial Object.
 
-  init_radio();
-  radio_on();
-  set_radio_pwr(0);
-
-  // afternate frequancy in run time
-  if (digitalRead(radio_freq_sw)) {
-    freq_tx = 144.590;
-    Serial.println("[info] Alternate freq set");
-  } else {
-    freq_tx = freq_main;
-    Serial.println("[info] APRS freq set");
-  }
   //start GPS
   gps.begin(9600);
 
-  //init radio module and change frequency
-
-  //dra = DRA818::configure(dra_serial, DRA818_VHF, freq_rx, freq_tx, 4, 8, 0, 0, DRA818_12K5, true, true, true, &Serial);
-  //dra = DRA818::configure(dra_serial, DRA818_VHF, freq_tx, freq_tx, 4, 8, 0, 0, DRA818_12K5, true, true, true, &Serial);
-  //if (!dra) {
-  //  Serial.println("[err ] RF init failed");
- // } else {
-  //  Serial.println("[info] RF OK");
- // }
 }
 
 void loop() {
@@ -121,7 +86,7 @@ void loop() {
     while (gps.available() > 0) {
       time_share += 1;
       String gps_raw = gps.readStringUntil('\n');
-      //Serial.println(gps_raw);
+      Serial.println(gps_raw);
 
       // Valid data: $GPGLL,3938.28486,N,07957.13511,W,191757.00,A,A*7D
       if (gps_raw.substring(0, 6) == "$GPGLL") {
@@ -134,10 +99,8 @@ void loop() {
 
         if (gps_raw.length() > 30) {
           msg_id++;
-          // GPS locked
           update_GPS_v2(gps_raw);
 
-          //i2c functions needed
         }
       }
 
@@ -353,15 +316,7 @@ void update_GPS_alt(String gps_data) {
 int location_update() {
   int wait = 400;
 
-  // stop transmitting on a busy channel
-  while (digitalRead(radio_sql) == 0) {
-    wait--;
-    Serial.print(".");
-    if (wait == 0) {
-      Serial.println("[info] Skip TX: busy channel");
-      return 0;
-    }
-  }
+
   //radio_TX();
   Serial.println("[info] APRS:start");
   char comment[30];
