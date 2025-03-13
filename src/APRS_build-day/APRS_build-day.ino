@@ -8,13 +8,13 @@
 
 #define ADC_REFERENCE REF_5V
 
-#define radio_ppt 2  //not needed
+#define radio_ppt 3  //not needed
 
 //APRS specification
 #define symbol '$'
 #define SSID 9
 
-#define APRS_TX_offset_utc_sec 0 // this selects what UTC second the packet will be sent out
+#define APRS_TX_offset_utc_sec 19 // this selects what UTC second the packet will be sent out
 #define APRS_interval_count 100  // 100 is 1 min
 
 //APRS symbol
@@ -50,7 +50,7 @@ float lon, lat, utc;
 void setup() {
 
   Serial.begin(9600);  // for logging and debugging
-  Serial.println("[info]APRS Buildday tracker v1.4 - W8CUL/KE8TJE");
+  Serial.println("[info]APRS Buildday tracker v1.42 - W8CUL/KE8TJE");
 
   //start GPS
   gps.begin(9600);
@@ -154,7 +154,7 @@ int location_update() {
 
   APRS_init();
 
-  APRS_setPreamble(300);
+  APRS_setPreamble(700);
   APRS_setCallsign(myCALL, SSID);
 
   APRS_setLat(Lat);
@@ -163,7 +163,7 @@ int location_update() {
   // APRS icon - setting
   APRS_setSymbol(symbol);
   APRS_sendLoc(comment, strlen(comment), ' ');
-
+  while(bitRead(PORTB,5)); 
   delay(800);
 
   Serial.println("[info] APRS:end");
