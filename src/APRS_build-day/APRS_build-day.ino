@@ -15,7 +15,7 @@
 #define SSID 9
 
 #define APRS_TX_offset_utc_sec 19 // this selects what UTC second the packet will be sent out
-#define APRS_interval_count 100  // 100 is 1 min
+#define APRS_interval_count 300  // 100 is 1 min
 
 //APRS symbol
 // S - shuttle
@@ -27,13 +27,14 @@
 // 9 - Mobile
 // 11 - Spacecraft
 
+//#define sim 1
 
 String packetBuffer;
 SoftwareSerial gps(10, 11);  // RX, TX
 
 char Lat[] = "xxxx.xxxxxx";
 char Lon[] = "xxxxx.xxxxxxxx";
-char alt[] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+
 
 char test_data[100];
 
@@ -46,11 +47,24 @@ float freq_tx;
 
 int time_trigger = 0;
 float lon, lat, utc;
+int sec,min; 
+
+int telemetry[6];
+char ext[12];
 
 void setup() {
 
   Serial.begin(9600);  // for logging and debugging
   Serial.println("[info]APRS Buildday tracker v1.42 - W8CUL/KE8TJE");
+
+  pinMode(2,OUTPUT);
+  digitalWrite(2,HIGH);
+  delay(500);
+  digitalWrite(2,LOW);
+  delay(500);
+  digitalWrite(2,HIGH);
+  delay(500);
+  digitalWrite(2,LOW);
 
   //start GPS
   gps.begin(9600);
@@ -64,12 +78,27 @@ void loop() {
     //Serial.println(gps_raw);
     // Valid data: $GPGLL,3938.28486,N,07957.13511,W,191757.00,A,A*7D
     if (gps_raw.substring(0, 6) == "$GPGLL") {
+      
+      #ifdef sim
+        gps_raw = "$GPGLL,3938.28486,N,07957.13511,W,191757.00,A,A*7D";
+      #endif
       Serial.println(gps_raw);
       gps_raw.toCharArray(test_data, 100);
       char *p = strtok(test_data, ",");
       update_GPS(p);
     }
+
+
   }
+}
+
+void base91_telemetry(int a_values){
+  // 
+  for(int i=0;i<(a_values+1)*2;i+=2){
+    ext[i] = (int)(telemetry[i/2]/(91))+33;
+    ext[i+1] = (int)(telemetry[i/2]%(91))+33;
+  }
+  Serial.println(ext);
 }
 
 void update_GPS(char *p) {
@@ -118,8 +147,15 @@ void update_GPS(char *p) {
     return;
   }
 
-  int sec = long(utc) % 100;
-  int min = long(utc) % 10000 - sec;
+  #ifdef sim
+    sec = (sec+1);
+    if(sec==60) sec =0;
+  #endif
+    
+  #ifndef sim
+    sec = long(utc) % 100;
+    min = long(utc) % 10000 - sec;
+  #endif
 
   Serial.print(min);
   Serial.print(",");
@@ -133,12 +169,14 @@ void update_GPS(char *p) {
     gps.stopListening();
 
     //delay(5000);
-    location_update();
+    location_update(); //typical APRS location packet
+
 
     msg_valid = 0;
     gps.listen();
   }
 }
+
 
 int location_update() {
 
@@ -148,8 +186,11 @@ int location_update() {
   Serial.print(Lon);
 
   char comment[30];
+  telemetry[0] = msg_id;
+  telemetry[1] = msg_id+50;
 
-  sprintf(comment, "v1.4,msg_id:%d", msg_id);
+  base91_telemetry(1);    
+  sprintf(comment, "v1.4|%s|",ext); 
   Serial.println(comment);
 
   APRS_init();
@@ -161,10 +202,12 @@ int location_update() {
   APRS_setLon(Lon);
 
   // APRS icon - setting
+
   APRS_setSymbol(symbol);
   APRS_sendLoc(comment, strlen(comment), ' ');
   while(bitRead(PORTB,5)); 
   delay(800);
+
 
   Serial.println("[info] APRS:end");
   msg_id++;
