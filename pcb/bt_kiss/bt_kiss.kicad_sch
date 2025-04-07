@@ -3083,6 +3083,26 @@
 		)
 		(uuid "ff30ae91-b115-4fe1-ab6d-2632897c1fa2")
 	)
+	(text "APRS Bluetooth KISS TNC with a Liion 18650 "
+		(exclude_from_sim no)
+		(at 121.92 127.762 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "3c211dd7-a530-43f7-8bf7-14877796a74c")
+	)
+	(text "1.0"
+		(exclude_from_sim no)
+		(at 182.88 131.318 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "d8924568-730b-47cb-a2dc-0608b6c473d2")
+	)
 	(global_label "audio_in"
 		(shape input)
 		(at 115.57 45.72 180)
