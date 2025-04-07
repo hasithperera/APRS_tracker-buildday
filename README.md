@@ -6,8 +6,9 @@
 
 ## Bluetooth KISS TNC
 
-- Based on the interest we part 2 of the build day was developed for advanced users who needed APRS decode capabilitiles
-- A self powered KISS TNC PCB was designed 
+- Based on the interest, we added a part 2 for the build day that was developed for advanced users who needed APRS decode capabilities.
+- A self powered KISS TNC PCB was designed to carry existing firmware.
+	- Initial testing with APRSDroid and YAAC showed promising results
 - V1 PCB for the APRS KISS TNC 
 
 ![300](res/Pasted%20image%2020250407184240.png)
