@@ -40,7 +40,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -160,7 +161,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 719.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,8 +176,18 @@
   },
   "active": "e947f234654c2b50",
   "lastOpenFiles": [
-    "pcb/README.md",
+    "pcb/bt_kiss/Readme.md",
+    "pcb/bt_kiss/bt_kiss-backups/bt_kiss-2025-04-07_185002.zip",
+    "pcb/bt_kiss/#auto_saved_files#",
+    "pcb/bt_kiss/_autosave-bt_kiss.kicad_sch",
+    "pcb/bt_kiss/~bt_kiss.kicad_pcb.lck",
+    "pcb/bt_kiss/res/Pasted image 20250407184734.png",
+    "pcb/bt_kiss/res",
     "README.md",
+    "res/Pasted image 20250407184240.png",
+    "res/Pasted image 20250407184228.png",
+    "res",
+    "pcb/README.md",
     "pcb/res/Pasted image 20250128110349.png",
     "pcb/res/Pasted image 20241229175545.png",
     "pcb/res",
