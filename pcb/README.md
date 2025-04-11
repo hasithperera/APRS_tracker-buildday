@@ -41,18 +41,20 @@
 
 - Open up the Arduino code provided
 - to install the Aprs library go to: Tools > Manage Libraries....
-	- Search for `LibAPRS` nad install the library by Baris DINC
+	- Search for `LibAPRS` and install the library by Baris DINC
 - Once you have the library installed compile the program and it should compile without errors
-- Change line 45 to add your call
+- Change `line 45` to add your call
 ### Basic radio interface testing
 
 - Once the Arduino is properly programmed on power on the Radio will be keyed up 2 times as a test. 
 	- If this step fails: check your connectors and check your MOSFET.
-- To test the system indoors without GPS lock uncomment line 30, this will enable a simulate mode where GPS data is being. artificially provided 
-- once the second count reaches the value set in `APRS_TX_offset_utc_sec` your radio will transmit an APRS packet.
+- To test the system indoors without GPS lock uncomment `line 30`, this will enable a simulate mode where GPS data is being. artificially provided 
+- Once the second count reaches the value set in `APRS_TX_offset_utc_sec` your radio will transmit an APRS packet.
 	- Radio should key down automatically
-	- If was noted with some radios this may not happen and this was often observed when there was an extended length of cable involved
+	- It has been repoted with some radios this may not happen and this was often observed when there was an extended length of cable involved
 		- adding a ferrite bead would potentially solve the issue
 		- if not using a separate external antenna should help
 - NOTE: change the `APRS_TX_offset_utc_sec` to some random value. This is the time your specific APRS unit will transmit. Since its on simplex we don't want every one to TX at the same time. 
-- once you have completed testing comment out line 30
+- once you have completed testing comment out `line 30` congratulations now you have a working APRS beacon 
+
+if you have questions please reach out to KE8TJE
