@@ -186,11 +186,18 @@ int location_update() {
   Serial.print(Lon);
 
   char comment[30];
+
+  // Uncomment the following section for telemetry 
+  // do not change unless you are an advanced users
+  /* 
   telemetry[0] = msg_id;
   telemetry[1] = msg_id+50;
-
+  
   base91_telemetry(1);    
-  sprintf(comment, "v1.4|%s|",ext); 
+  sprintf(comment, "v1.50|%s|",ext); 
+  */
+  
+  sprintf(comment, "APRS beacon v1.41"); 
   Serial.println(comment);
 
   APRS_init();
