@@ -194,6 +194,7 @@ int location_update() {
 
   char comment[30];
 
+
   // telemetry functions unused
 
   telemetry[0] = msg_id;
@@ -204,6 +205,9 @@ int location_update() {
   // Users please do not chnage the version number
 
   sprintf(comment, "v1.43 | Testing TJE"); 
+  // sprintf(comment, "v1.50|%s|",ext); 
+ 
+  
   Serial.println(comment);
 
   APRS_init();
