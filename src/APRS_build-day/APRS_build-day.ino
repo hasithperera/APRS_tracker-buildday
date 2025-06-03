@@ -14,8 +14,8 @@
 #define symbol '$'
 #define SSID 9
 
-#define APRS_TX_offset_utc_sec 19 // this selects what UTC second the packet will be sent out
-#define APRS_interval_count 300  // 100 is 1 min
+#define APRS_TX_offset_utc_sec 14 // this selects what UTC second the packet will be sent out
+#define APRS_interval_count 100  // 100 is 1 min
 
 //APRS symbol
 // S - shuttle
@@ -27,7 +27,9 @@
 // 9 - Mobile
 // 11 - Spacecraft
 
-//#define sim 1
+
+/*NOTE: Uncomment the following line to put the unit to simulation mode*/
+#define sim 1
 
 String packetBuffer;
 SoftwareSerial gps(10, 11);  // RX, TX
@@ -55,7 +57,12 @@ char ext[12];
 void setup() {
 
   Serial.begin(9600);  // for logging and debugging
-  Serial.println("[info]APRS Buildday tracker v1.42 - W8CUL/KE8TJE");
+  Serial.println("[info]APRS Buildday tracker v1.43 - W8CUL/KE8TJE");
+
+  #ifdef sim
+    Serial.println("Unit is in Debug mode. GPS data will be simulated");
+    Serial.println("For testing only");
+  #endif
 
   pinMode(2,OUTPUT);
   digitalWrite(2,HIGH);
@@ -187,17 +194,20 @@ int location_update() {
 
   char comment[30];
 
-  // Uncomment the following section for telemetry 
-  // do not change unless you are an advanced users
-  /* 
+
+  // telemetry functions unused
+
   telemetry[0] = msg_id;
   telemetry[1] = msg_id+50;
-  
   base91_telemetry(1);    
-  sprintf(comment, "v1.50|%s|",ext); 
-  */
+  // variable name : ext
+
+  // Users please do not chnage the version number
+
+  sprintf(comment, "v1.43 | Testing TJE"); 
+  // sprintf(comment, "v1.50|%s|",ext); 
+ 
   
-  sprintf(comment, "APRS beacon v1.41"); 
   Serial.println(comment);
 
   APRS_init();
